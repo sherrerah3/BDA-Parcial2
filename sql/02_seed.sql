@@ -44,7 +44,7 @@ INSERT INTO asignacion_vehiculo_conductor (vehiculo_id, conductor_id, fecha_desd
 SELECT
   v.vehiculo_id,
   ((v.vehiculo_id - 1) % 90) + 1,
-  DATE '2025-01-01' + ((v.vehiculo_id * 2) % 320),
+  DATE '2025-01-01' + (((v.vehiculo_id * 2) % 320)::INT),
   NULL
 FROM vehiculo v;
 
