@@ -5,6 +5,12 @@ PRIMARY_HOST="${1:-postgres-primary}"
 PRIMARY_PORT="${2:-5432}"
 PGDATA="${PGDATA:-/var/lib/postgresql/data}"
 
+if [ "$(id -u)" = "0" ]; then
+  mkdir -p "$PGDATA"
+  chown -R postgres:postgres "$PGDATA"
+  exec gosu postgres "$0" "$@"
+fi
+
 export PGPASSWORD="${REPL_PASSWORD:-replpass}"
 
 if [ ! -s "$PGDATA/PG_VERSION" ]; then
